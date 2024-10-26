@@ -14,7 +14,7 @@ struct Order {
         let percent: Int
         let endDate: Date?
         let info: String?
-        var active: Bool
+        var active: Bool 
     }
 
     struct Product {
@@ -24,6 +24,7 @@ struct Order {
 
     var screenTitle: String
     var promocodes: [Promocode]
+    var availableForActive: [Promocode]?
     let products: [Product]
     let paymentDiscount: Double?
     let baseDiscount: Double?

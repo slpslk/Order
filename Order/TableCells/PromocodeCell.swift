@@ -19,16 +19,16 @@ class PromocodeCell: UITableViewCell {
         let label = UILabel()
         label.textColor = Colors.darkGray
         label.font = UIFont(name: "Roboto-Regular", size: 16)
+        label.numberOfLines = 0
         return label
     }()
-    
     
     private lazy var discountLabel: UILabel = {
         let label = UILabel()
         label.textColor = UIColor.white
         label.font = UIFont.preferredFont(forTextStyle: .caption1)
         return label
-    } ()
+    }()
     
     private lazy var promocodeDiscount: UIView = {
         let discountView = UIView()
@@ -58,6 +58,16 @@ class PromocodeCell: UITableViewCell {
         return label
     }()
     
+    private lazy var promocodeHeader: UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = .vertical
+        stackView.alignment = .fill
+        stackView.distribution = .fill
+        stackView.addArrangedSubview(titleView)
+        stackView.addArrangedSubview(promocodeDate)
+        return stackView
+    }()
+    
     private lazy var promocodeSwitch: UISwitch = {
         let switchView = UISwitch()
         switchView.tintColor = Colors.lightGray
@@ -71,8 +81,7 @@ class PromocodeCell: UITableViewCell {
     
     private lazy var promocodeInfo: UIView = {
         let view = UIView()
-        view.addSubview(titleView)
-        view.addSubview(promocodeDate)
+        view.addSubview(promocodeHeader)
         view.addSubview(promocodeSwitch)
         return view
     }()
@@ -82,6 +91,17 @@ class PromocodeCell: UITableViewCell {
         label.textColor = Colors.lightGray
         label.font = UIFont(name: "Roboto-Regular", size: 12)
         return label
+    }()
+    
+    private lazy var promocodeContent: UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = .vertical
+        stackView.alignment = .fill
+        stackView.distribution = .fill
+        stackView.spacing = 8
+        stackView.addArrangedSubview(promocodeInfo)
+        stackView.addArrangedSubview(promocodeDescription)
+        return stackView
     }()
     
     private lazy var promocodeBackground: UIView = {
@@ -99,8 +119,7 @@ class PromocodeCell: UITableViewCell {
         
         view.addSubview(circleView)
         view.addSubview(rightCircleView)
-        view.addSubview(promocodeInfo)
-        view.addSubview(promocodeDescription)
+        view.addSubview(promocodeContent)
         
         view.translatesAutoresizingMaskIntoConstraints = false
         circleView.translatesAutoresizingMaskIntoConstraints = false
@@ -129,14 +148,20 @@ class PromocodeCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupUI()
     }
+    
+    override func prepareForReuse() {
+        promocodeTitle.text = nil
+        discountLabel.text = nil
+        promocodeSwitch.isOn = false
+        promocodeDate.text = nil
+        promocodeDescription.text = nil
+    }
 }
 
 private extension PromocodeCell {
     @objc func toggle() {
         guard let viewModel else { return }
-        if let result = viewModel.toggle?(viewModel.id), !result {
-            promocodeSwitch.isOn.toggle()
-        }
+        viewModel.toggle?(viewModel.id, promocodeSwitch.isOn)
     }
     
     func updateUI() {
@@ -148,51 +173,33 @@ private extension PromocodeCell {
         discountLabel.text = "-\(viewModel.percent)%"
         promocodeSwitch.isOn = viewModel.isActive
         
-
         if let date = viewModel.endDate {
-                let dateFormatter = DateFormatter()
-                dateFormatter.locale = Locale(identifier: "ru_RU")
-                
-                dateFormatter.dateFormat = "LLLL"
-                let monthString = dateFormatter.string(from: date).dropLast() + "я"
-                
-                dateFormatter.dateFormat = "d"
-                let dayString = dateFormatter.string(from: date)
-                
-                promocodeDate.text = "По \(dayString) \(monthString)"
-                
-                NSLayoutConstraint.activate([
-                    promocodeDate.topAnchor.constraint(equalTo: titleView.bottomAnchor),
-                    promocodeDate.leftAnchor.constraint(equalTo: promocodeInfo.leftAnchor),
-                    promocodeDate.bottomAnchor.constraint(equalTo: promocodeInfo.bottomAnchor)
-                ])
-        } else {
-            NSLayoutConstraint.activate([
-                titleView.bottomAnchor.constraint(equalTo: promocodeInfo.bottomAnchor),
-            ])
+            let dateFormatter = DateFormatter()
+            dateFormatter.locale = Locale(identifier: "ru_RU")
+            
+            dateFormatter.dateFormat = "LLLL"
+            let monthString = dateFormatter.string(from: date).dropLast() + "я"
+            
+            dateFormatter.dateFormat = "d"
+            let dayString = dateFormatter.string(from: date)
+            
+            promocodeDate.text = "По \(dayString) \(monthString)"
+            promocodeDate.isHidden = false
+        }
+        else {
+            promocodeDate.isHidden = true
         }
         
-        
         if let description = viewModel.info{
-            if promocodeDescription.text == nil {
-                promocodeDescription.text = description
-                
-                NSLayoutConstraint.activate([
-                    promocodeDescription.topAnchor.constraint(equalTo: promocodeInfo.bottomAnchor, constant: 8),
-                    promocodeDescription.leftAnchor.constraint(equalTo: promocodeBackground.leftAnchor, constant: 20),
-                    promocodeDescription.rightAnchor.constraint(equalTo: promocodeBackground.rightAnchor, constant: -20),
-                    promocodeDescription.bottomAnchor.constraint(equalTo: promocodeBackground.bottomAnchor, constant: -12)
-                ])
-            }
+            promocodeDescription.text = description
+            promocodeDescription.isHidden = false
         } else {
-            NSLayoutConstraint.activate([
-                promocodeInfo.bottomAnchor.constraint(equalTo: promocodeBackground.bottomAnchor, constant: -12)
-            ])
+            promocodeDescription.isHidden = true
         }
     }
 
     func setupUI() {
-        contentView.addSubview(promocodeInfo)
+        contentView.backgroundColor = .white
         contentView.addSubview(promocodeBackground)
         
         promocodeTitle.translatesAutoresizingMaskIntoConstraints = false
@@ -201,9 +208,11 @@ private extension PromocodeCell {
         titleView.translatesAutoresizingMaskIntoConstraints = false
         iconView.translatesAutoresizingMaskIntoConstraints = false
         promocodeDate.translatesAutoresizingMaskIntoConstraints = false
+        promocodeHeader.translatesAutoresizingMaskIntoConstraints = false
         promocodeSwitch.translatesAutoresizingMaskIntoConstraints = false
         promocodeInfo.translatesAutoresizingMaskIntoConstraints = false
         promocodeDescription.translatesAutoresizingMaskIntoConstraints = false
+        promocodeContent.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
             promocodeBackground.topAnchor.constraint(equalTo: contentView.topAnchor),
@@ -213,14 +222,17 @@ private extension PromocodeCell {
         ])
         
         NSLayoutConstraint.activate([
-            promocodeInfo.topAnchor.constraint(equalTo: promocodeBackground.topAnchor, constant: 12),
-            promocodeInfo.leftAnchor.constraint(equalTo: promocodeBackground.leftAnchor, constant: 20),
-            promocodeInfo.rightAnchor.constraint(equalTo: promocodeBackground.rightAnchor, constant: -20),
+            promocodeContent.topAnchor.constraint(equalTo: promocodeBackground.topAnchor, constant: 12),
+            promocodeContent.leftAnchor.constraint(equalTo: promocodeBackground.leftAnchor, constant: 20),
+            promocodeContent.rightAnchor.constraint(equalTo: promocodeBackground.rightAnchor, constant: -20),
+            promocodeContent.bottomAnchor.constraint(equalTo: promocodeBackground.bottomAnchor, constant: -12)
         ])
-   
+              
         NSLayoutConstraint.activate([
-            titleView.topAnchor.constraint(equalTo: promocodeInfo.topAnchor),
-            titleView.leftAnchor.constraint(equalTo: promocodeInfo.leftAnchor),
+            promocodeHeader.topAnchor.constraint(equalTo: promocodeInfo.topAnchor),
+            promocodeHeader.leftAnchor.constraint(equalTo: promocodeInfo.leftAnchor),
+            promocodeHeader.rightAnchor.constraint(lessThanOrEqualTo: promocodeSwitch.leftAnchor, constant: -8),
+            promocodeHeader.bottomAnchor.constraint(equalTo: promocodeInfo.bottomAnchor)
         ])
         
         NSLayoutConstraint.activate([
@@ -234,10 +246,13 @@ private extension PromocodeCell {
             promocodeTitle.bottomAnchor.constraint(equalTo: titleView.bottomAnchor)
         ])
         
+        promocodeDiscount.setContentCompressionResistancePriority(.required, for: .horizontal)
+        discountLabel.setContentCompressionResistancePriority(.required, for: .horizontal)
+        iconView.setContentCompressionResistancePriority(.required, for: .horizontal)
+        
         NSLayoutConstraint.activate([
             promocodeDiscount.topAnchor.constraint(equalTo: titleView.topAnchor),
             promocodeDiscount.leftAnchor.constraint(equalTo: promocodeTitle.rightAnchor, constant: 4),
-            promocodeDiscount.bottomAnchor.constraint(equalTo: titleView.bottomAnchor)
         ])
         
         NSLayoutConstraint.activate([
@@ -250,8 +265,7 @@ private extension PromocodeCell {
         NSLayoutConstraint.activate([
             iconView.topAnchor.constraint(equalTo: titleView.topAnchor),
             iconView.leftAnchor.constraint(equalTo: promocodeDiscount.rightAnchor, constant: 4),
-            iconView.rightAnchor.constraint(equalTo: titleView.rightAnchor),
-            iconView.bottomAnchor.constraint(equalTo: titleView.bottomAnchor)
+            iconView.rightAnchor.constraint(equalTo: titleView.rightAnchor)
         ])
     }
     

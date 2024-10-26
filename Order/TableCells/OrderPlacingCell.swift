@@ -15,27 +15,9 @@ class OrderPlacingCell: UITableViewCell {
         }
     }
     
-    private lazy var buttonLabel: UILabel = {
-        let label = UILabel()
-        label.font = UIFont(name: "Roboto-Regular", size: 16)
-        label.textColor = .white
-        return label
-    }()
-    
-    private lazy var placeOrderButton: UIButton = {
-        let button = UIButton()
-        button.backgroundColor = Colors.orange
-        button.layer.cornerRadius = 12
-        button.addSubview(buttonLabel)
-        return button
-    }()
-    
-    private lazy var warningText: UILabel = {
-        let label = UILabel()
-        label.numberOfLines = 0
-        label.textAlignment = .center
-        return label
-    }()
+    private lazy var buttonTextAttributes = AttributeContainer.init( [
+        NSAttributedString.Key.font: UIFont(name: "Roboto-Regular", size: 16) ?? .systemFont(ofSize: 16)
+    ])
     
     private var textAttributes = [
         NSAttributedString.Key.font: UIFont(name: "Roboto-Regular", size: 12),
@@ -47,6 +29,20 @@ class OrderPlacingCell: UITableViewCell {
         NSAttributedString.Key.foregroundColor: Colors.darkGray
     ]
     
+    private lazy var placeOrderButton: UIButton = {
+        let button = UIButton()
+        button.backgroundColor = Colors.orange
+        button.layer.cornerRadius = 12
+        return button
+    }()
+    
+    private lazy var warningText: UILabel = {
+        let label = UILabel()
+        label.numberOfLines = 0
+        label.textAlignment = .center
+        return label
+    }()
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -54,6 +50,11 @@ class OrderPlacingCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupUI()
+    }
+    
+    override func prepareForReuse() {
+        placeOrderButton.configuration = nil
+        warningText.attributedText = nil
     }
 }
 
@@ -63,7 +64,17 @@ private extension OrderPlacingCell {
             return
         }
 
-        buttonLabel.text = viewModel.title
+        var config = UIButton.Configuration.plain()
+        
+        let titleAttributedString = AttributedString(viewModel.title,
+                                                     attributes: buttonTextAttributes)
+        
+        config.attributedTitle = titleAttributedString
+        config.baseForegroundColor = .white
+        config.titleAlignment = .center
+        placeOrderButton.configuration = config
+        
+        
         let attributedText = NSMutableAttributedString(string: viewModel.warningText,
                                                        attributes: textAttributes as [NSAttributedString.Key : Any])
         let highlightedText = NSMutableAttributedString(string: viewModel.highlightedText,
@@ -77,13 +88,7 @@ private extension OrderPlacingCell {
         contentView.addSubview(placeOrderButton)
         contentView.addSubview(warningText)
         
-        buttonLabel.translatesAutoresizingMaskIntoConstraints = false
         placeOrderButton.translatesAutoresizingMaskIntoConstraints = false
-        
-        NSLayoutConstraint.activate([
-            buttonLabel.centerXAnchor.constraint(equalTo: placeOrderButton.centerXAnchor),
-            buttonLabel.centerYAnchor.constraint(equalTo: placeOrderButton.centerYAnchor)
-        ])
         
         NSLayoutConstraint.activate([
             placeOrderButton.heightAnchor.constraint(equalToConstant: 54),

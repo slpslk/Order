@@ -18,7 +18,8 @@ struct TableCellViewModel {
             let endDate: Date?
             let info: String?
             var isActive: Bool
-            let toggle: ((String) -> Bool)?
+            let toggle: ((String, Bool) -> Void)?
+            var isHidden: Bool = false
         }
         
         struct TitleInfo {
@@ -28,11 +29,13 @@ struct TableCellViewModel {
         
         struct ApplyButtonInfo {
             let title: String
-            let image: UIImage?
+            let click: (() -> Void)?
         }
         
         struct HideButtonInfo {
-            let title: String = "Скрыть промокоды"
+            var title: String = "Скрыть промокоды"
+            let click: (() -> Void)?
+            var isHidden: Bool = true
         }
         
         struct TotalPriceInfo {
@@ -64,4 +67,39 @@ struct TableCellViewModel {
     }
 
     var type: CellViewModelType
+}
+
+extension TableCellViewModel {
+    var isHidden: Bool {
+            switch type {
+            case .promocode(let info):
+                return info.isHidden
+            default:
+                return false
+            }
+        }
+    
+    var isHideButton: Bool {
+        if case .hideButton = type { return true }
+        return false
+    }
+    
+    var isPromocode: Bool {
+        if case .promocode = type { return true }
+        return false
+    }
+    
+    var isTotalPrice: Bool {
+        if case .totalPrice = type { return true }
+        return false
+    }
+    
+    func matches(id: String) -> Bool {
+            switch type {
+            case .promocode(let info):
+                return info.id == id
+            default:
+                return false
+            }
+        }
 }

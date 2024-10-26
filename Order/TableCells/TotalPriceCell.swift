@@ -67,6 +67,11 @@ class TotalPriceCell: UITableViewCell {
         return label
     }()
     
+    private lazy var iconView: UIImageView = {
+       let icon = UIImageView(image: UIImage(named: "infoIcon"))
+        return icon
+    }()
+    
     private lazy var promocodeAmount: UILabel = {
         let label = UILabel()
         label.font = UIFont(name: "Roboto-Regular", size: 14)
@@ -78,6 +83,7 @@ class TotalPriceCell: UITableViewCell {
     private lazy var promocodeAmountView: UIView = {
         let view = UIView()
         view.addSubview(promocodeAmountTitle)
+        view.addSubview(iconView)
         view.addSubview(promocodeAmount)
         return view
     }()
@@ -103,6 +109,18 @@ class TotalPriceCell: UITableViewCell {
         view.addSubview(paymentAmountTitle)
         view.addSubview(paymentAmount)
         return view
+    }()
+    
+    private lazy var summaryContent: UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = .vertical
+        stackView.distribution = .fill
+        stackView.spacing = 10
+        stackView.addArrangedSubview(allPriceView)
+        stackView.addArrangedSubview(discountAmountView)
+        stackView.addArrangedSubview(promocodeAmountView)
+        stackView.addArrangedSubview(paymentAmountView)
+        return stackView
     }()
     
     private lazy var separatorLine: UIView = {
@@ -142,6 +160,19 @@ class TotalPriceCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupUI()
     }
+    
+    override func prepareForReuse() {
+        allPriceTitle.text = nil
+        allPrice.text = nil
+        discountAmountTitle.text = nil
+        discountAmount.text = nil
+        promocodeAmountTitle.text = nil
+        promocodeAmount.text = nil
+        paymentAmountTitle.text = nil
+        paymentAmount.text = nil
+        totalPriceTitle.text = nil
+        totalPrice.text = nil
+    }
 }
 
 private extension TotalPriceCell {
@@ -152,12 +183,31 @@ private extension TotalPriceCell {
 
         allPriceTitle.text = viewModel.allPriceTitle
         allPrice.text = "\(Int(viewModel.allPrice)) ₽"
-        discountAmountTitle.text = viewModel.discountAmountTitle
-        discountAmount.text = "-\(Int(viewModel.discountAmount ?? 0)) ₽"
-        promocodeAmountTitle.text = viewModel.promocodeAmountTitle
-        promocodeAmount.text = "-\(Int(viewModel.promocodeAmount ?? 0)) ₽"
-        paymentAmountTitle.text = viewModel.paymentAmountTitle
-        paymentAmount.text = "-\(Int(viewModel.paymentAmount ?? 0)) ₽"
+        
+        if let discountValue = viewModel.discountAmount, discountValue > 0 {
+            discountAmountTitle.text = viewModel.discountAmountTitle
+            discountAmount.text = "-\(Int(discountValue)) ₽"
+            discountAmountView.isHidden = false
+        } else {
+            discountAmountView.isHidden = true
+        }
+        
+        if let promoValue = viewModel.promocodeAmount, promoValue > 0 {
+            promocodeAmountTitle.text = viewModel.promocodeAmountTitle
+            promocodeAmount.text = "-\(Int(promoValue)) ₽"
+            promocodeAmountView.isHidden = false
+        } else {
+            promocodeAmountView.isHidden = true
+        }
+        
+        if let paymentValue = viewModel.paymentAmount, paymentValue > 0 {
+            paymentAmountTitle.text = viewModel.paymentAmountTitle
+            paymentAmount.text = "-\(Int(paymentValue)) ₽"
+            paymentAmountView.isHidden = false
+        } else {
+            paymentAmountView.isHidden = true
+        }
+        
         totalPriceTitle.text = viewModel.totalPriceTitle
         totalPrice.text = "\(Int(viewModel.totalPrice)) ₽"
         
@@ -165,22 +215,24 @@ private extension TotalPriceCell {
 
     func setupUI() {
         contentView.backgroundColor = Colors.backgroundGray
-        contentView.addSubview(allPriceView)
-        contentView.addSubview(discountAmountView)
-        contentView.addSubview(promocodeAmountView)
-        contentView.addSubview(paymentAmountView)
+        contentView.addSubview(summaryContent)
         contentView.addSubview(separatorLine)
         contentView.addSubview(totalPriceView)
         
+        summaryContent.translatesAutoresizingMaskIntoConstraints = false
         allPriceView.translatesAutoresizingMaskIntoConstraints = false
-        allPriceTitle.translatesAutoresizingMaskIntoConstraints = false
-        allPrice.translatesAutoresizingMaskIntoConstraints = false
+        discountAmountView.translatesAutoresizingMaskIntoConstraints = false
+        promocodeAmountView.translatesAutoresizingMaskIntoConstraints = false
+        paymentAmountView.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            allPriceView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 24),
-            allPriceView.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 32),
-            allPriceView.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -32)
+            summaryContent.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 24),
+            summaryContent.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 32),
+            summaryContent.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -32)
         ])
+
+        allPriceTitle.translatesAutoresizingMaskIntoConstraints = false
+        allPrice.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
             allPriceTitle.topAnchor.constraint(equalTo: allPriceView.topAnchor),
@@ -194,15 +246,8 @@ private extension TotalPriceCell {
             allPrice.bottomAnchor.constraint(equalTo: allPriceView.bottomAnchor)
         ])
         
-        discountAmountView.translatesAutoresizingMaskIntoConstraints = false
         discountAmountTitle.translatesAutoresizingMaskIntoConstraints = false
         discountAmount.translatesAutoresizingMaskIntoConstraints = false
-        
-        NSLayoutConstraint.activate([
-            discountAmountView.topAnchor.constraint(equalTo: allPriceView.bottomAnchor, constant: 10),
-            discountAmountView.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 32),
-            discountAmountView.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -32),
-        ])
         
         NSLayoutConstraint.activate([
             discountAmountTitle.topAnchor.constraint(equalTo: discountAmountView.topAnchor),
@@ -216,15 +261,9 @@ private extension TotalPriceCell {
             discountAmount.bottomAnchor.constraint(equalTo: discountAmountView.bottomAnchor)
         ])
         
-        promocodeAmountView.translatesAutoresizingMaskIntoConstraints = false
         promocodeAmountTitle.translatesAutoresizingMaskIntoConstraints = false
+        iconView.translatesAutoresizingMaskIntoConstraints = false
         promocodeAmount.translatesAutoresizingMaskIntoConstraints = false
-        
-        NSLayoutConstraint.activate([
-            promocodeAmountView.topAnchor.constraint(equalTo: discountAmountView.bottomAnchor, constant: 10),
-            promocodeAmountView.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 32),
-            promocodeAmountView.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -32),
-        ])
         
         NSLayoutConstraint.activate([
             promocodeAmountTitle.topAnchor.constraint(equalTo: promocodeAmountView.topAnchor),
@@ -233,20 +272,19 @@ private extension TotalPriceCell {
         ])
         
         NSLayoutConstraint.activate([
+            iconView.topAnchor.constraint(equalTo: promocodeAmountView.topAnchor),
+            iconView.leftAnchor.constraint(equalTo: promocodeAmountTitle.rightAnchor, constant: 6),
+            iconView.bottomAnchor.constraint(equalTo: promocodeAmountView.bottomAnchor),
+        ])
+        
+        NSLayoutConstraint.activate([
             promocodeAmount.topAnchor.constraint(equalTo: promocodeAmountView.topAnchor),
             promocodeAmount.rightAnchor.constraint(equalTo: promocodeAmountView.rightAnchor),
             promocodeAmount.bottomAnchor.constraint(equalTo: promocodeAmountView.bottomAnchor)
         ])
         
-        paymentAmountView.translatesAutoresizingMaskIntoConstraints = false
         paymentAmountTitle.translatesAutoresizingMaskIntoConstraints = false
         paymentAmount.translatesAutoresizingMaskIntoConstraints = false
-        
-        NSLayoutConstraint.activate([
-            paymentAmountView.topAnchor.constraint(equalTo: promocodeAmountView.bottomAnchor, constant: 10),
-            paymentAmountView.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 32),
-            paymentAmountView.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -32)
-        ])
         
         NSLayoutConstraint.activate([
             paymentAmountTitle.topAnchor.constraint(equalTo: paymentAmountView.topAnchor),
@@ -264,7 +302,7 @@ private extension TotalPriceCell {
         
         NSLayoutConstraint.activate([
             separatorLine.heightAnchor.constraint(equalToConstant: 1),
-            separatorLine.topAnchor.constraint(equalTo: paymentAmountView.bottomAnchor, constant: 16),
+            separatorLine.topAnchor.constraint(equalTo: summaryContent.bottomAnchor, constant: 16),
             separatorLine.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 32),
             separatorLine.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -32)
         ])

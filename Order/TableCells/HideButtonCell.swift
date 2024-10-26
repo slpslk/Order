@@ -15,16 +15,13 @@ class HideButtonCell: UITableViewCell {
         }
     }
     
-    private lazy var buttonLabel: UILabel = {
-        let label = UILabel()
-        label.font = UIFont(name: "Roboto-Regular", size: 16)
-        label.textColor = Colors.orange
-        return label
-    }()
+    private lazy var attributes = AttributeContainer.init([
+        NSAttributedString.Key.font: UIFont(name: "Roboto-Regular", size: 16) ?? UIFont.systemFont(ofSize: 16)
+    ])
     
     private lazy var hideButton: UIButton = {
         let button = UIButton()
-        button.addSubview(buttonLabel)
+        button.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
         return button
     }()
     
@@ -36,30 +33,44 @@ class HideButtonCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupUI()
     }
+    
+    override func prepareForReuse() {
+        hideButton.configuration = nil
+    }
 }
 
 private extension HideButtonCell {
+    @objc func buttonTapped() {
+        guard let viewModel else { return }
+        viewModel.click?()
+    }
+    
     func updateUI() {
         guard let viewModel else {
             return
         }
-
-        buttonLabel.text = viewModel.title
+        
+        if viewModel.isHidden {
+            hideButton.isHidden = true
+        } else {
+            hideButton.isHidden = false
+            var config = UIButton.Configuration.plain()
+            
+            let titleAttributedString = AttributedString(viewModel.title, attributes: attributes)
+            
+            config.attributedTitle = titleAttributedString
+            config.baseForegroundColor = Colors.orange
+            config.contentInsets = NSDirectionalEdgeInsets(top: 9, leading: 16, bottom: 9, trailing: 16)
+            hideButton.configuration = config
+        }
     }
 
     func setupUI() {
+        contentView.backgroundColor = .white
         contentView.addSubview(hideButton)
         
-        buttonLabel.translatesAutoresizingMaskIntoConstraints = false
         hideButton.translatesAutoresizingMaskIntoConstraints = false
-        
-        NSLayoutConstraint.activate([
-            buttonLabel.topAnchor.constraint(equalTo: hideButton.topAnchor, constant: 9),
-            buttonLabel.leftAnchor.constraint(equalTo: hideButton.leftAnchor,constant: 16),
-            buttonLabel.rightAnchor.constraint(equalTo: hideButton.rightAnchor, constant: -16),
-            buttonLabel.bottomAnchor.constraint(equalTo: hideButton.bottomAnchor, constant: -9)
-        ])
-        
+
         NSLayoutConstraint.activate([
             hideButton.topAnchor.constraint(equalTo: contentView.topAnchor),
             hideButton.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 16),

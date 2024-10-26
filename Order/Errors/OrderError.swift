@@ -11,4 +11,6 @@ enum OrderError: Error {
     case zeroProducts
     case zeroProductPrice
     case tooBigDiscount
+    case moreThanTwoPromocodes
+    case dataError
 }

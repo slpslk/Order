@@ -14,6 +14,9 @@
 		671291492CC0EFAE00A85863 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 671291482CC0EFAE00A85863 /* Assets.xcassets */; };
 		6712914C2CC0EFAE00A85863 /* Base in Resources */ = {isa = PBXBuildFile; fileRef = 6712914B2CC0EFAE00A85863 /* Base */; };
 		671291552CC0EFDC00A85863 /* Roboto-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 671291542CC0EFDC00A85863 /* Roboto-Regular.ttf */; };
+		67426BAB2CCA59E10086B22A /* PaddedTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67426BAA2CCA59E10086B22A /* PaddedTextField.swift */; };
+		677DA8862CC8F758007379EA /* ApplyPromocodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 677DA8852CC8F758007379EA /* ApplyPromocodeViewController.swift */; };
+		677DA8882CC8F7AE007379EA /* ApplyPromocodeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 677DA8872CC8F7AE007379EA /* ApplyPromocodeViewModel.swift */; };
 		67C3A8DE2CC3F4DE007E83D2 /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67C3A8DD2CC3F4DE007E83D2 /* ViewModel.swift */; };
 		67C3A8E02CC3F7EC007E83D2 /* OrderError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67C3A8DF2CC3F7EC007E83D2 /* OrderError.swift */; };
 		67C3A8E22CC3F814007E83D2 /* TableCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67C3A8E12CC3F814007E83D2 /* TableCellViewModel.swift */; };
@@ -36,6 +39,9 @@
 		6712914B2CC0EFAE00A85863 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		6712914D2CC0EFAE00A85863 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		671291542CC0EFDC00A85863 /* Roboto-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Regular.ttf"; sourceTree = "<group>"; };
+		67426BAA2CCA59E10086B22A /* PaddedTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaddedTextField.swift; sourceTree = "<group>"; };
+		677DA8852CC8F758007379EA /* ApplyPromocodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplyPromocodeViewController.swift; sourceTree = "<group>"; };
+		677DA8872CC8F7AE007379EA /* ApplyPromocodeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplyPromocodeViewModel.swift; sourceTree = "<group>"; };
 		67C3A8DD2CC3F4DE007E83D2 /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
 		67C3A8DF2CC3F7EC007E83D2 /* OrderError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderError.swift; sourceTree = "<group>"; };
 		67C3A8E12CC3F814007E83D2 /* TableCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableCellViewModel.swift; sourceTree = "<group>"; };
@@ -78,34 +84,85 @@
 		6712913E2CC0EFAC00A85863 /* Order */ = {
 			isa = PBXGroup;
 			children = (
-				671291532CC0EFBE00A85863 /* fonts */,
+				67ABF6C52CCD17E2008DD703 /* Data */,
+				67ABF6C42CCD17C3008DD703 /* CustomViews */,
+				67ABF6C32CCD17B1008DD703 /* Errors */,
+				67ABF6C22CCD179A008DD703 /* ApplyPromocodeScreen */,
+				67ABF6C12CCD1778008DD703 /* TableCells */,
+				67ABF6C02CCD174A008DD703 /* PromocodeScreen */,
+				671291532CC0EFBE00A85863 /* Fonts */,
 				6712913F2CC0EFAC00A85863 /* AppDelegate.swift */,
 				671291412CC0EFAC00A85863 /* SceneDelegate.swift */,
-				671291432CC0EFAC00A85863 /* ViewController.swift */,
 				671291452CC0EFAC00A85863 /* Main.storyboard */,
 				671291482CC0EFAE00A85863 /* Assets.xcassets */,
 				6712914A2CC0EFAE00A85863 /* LaunchScreen.storyboard */,
 				6712914D2CC0EFAE00A85863 /* Info.plist */,
+			);
+			path = Order;
+			sourceTree = "<group>";
+		};
+		671291532CC0EFBE00A85863 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				671291542CC0EFDC00A85863 /* Roboto-Regular.ttf */,
+			);
+			path = Fonts;
+			sourceTree = "<group>";
+		};
+		67ABF6C02CCD174A008DD703 /* PromocodeScreen */ = {
+			isa = PBXGroup;
+			children = (
+				671291432CC0EFAC00A85863 /* ViewController.swift */,
+				67C3A8DD2CC3F4DE007E83D2 /* ViewModel.swift */,
+			);
+			path = PromocodeScreen;
+			sourceTree = "<group>";
+		};
+		67ABF6C12CCD1778008DD703 /* TableCells */ = {
+			isa = PBXGroup;
+			children = (
 				67D374072CC21BE900775671 /* TitleCell.swift */,
 				67D374092CC21C3200775671 /* ApplyButtonCell.swift */,
 				67D3740B2CC21C7700775671 /* PromocodeCell.swift */,
 				67D3740D2CC21CA300775671 /* HideButtonCell.swift */,
 				67D3740F2CC21CCF00775671 /* TotalPriceCell.swift */,
 				67D374112CC2367C00775671 /* OrderPlacingCell.swift */,
-				67C3A8DD2CC3F4DE007E83D2 /* ViewModel.swift */,
-				67C3A8DF2CC3F7EC007E83D2 /* OrderError.swift */,
 				67C3A8E12CC3F814007E83D2 /* TableCellViewModel.swift */,
-				67C3A8E32CC3F839007E83D2 /* Order.swift */,
 			);
-			path = Order;
+			path = TableCells;
 			sourceTree = "<group>";
 		};
-		671291532CC0EFBE00A85863 /* fonts */ = {
+		67ABF6C22CCD179A008DD703 /* ApplyPromocodeScreen */ = {
 			isa = PBXGroup;
 			children = (
-				671291542CC0EFDC00A85863 /* Roboto-Regular.ttf */,
+				677DA8852CC8F758007379EA /* ApplyPromocodeViewController.swift */,
+				677DA8872CC8F7AE007379EA /* ApplyPromocodeViewModel.swift */,
 			);
-			path = fonts;
+			path = ApplyPromocodeScreen;
+			sourceTree = "<group>";
+		};
+		67ABF6C32CCD17B1008DD703 /* Errors */ = {
+			isa = PBXGroup;
+			children = (
+				67C3A8DF2CC3F7EC007E83D2 /* OrderError.swift */,
+			);
+			path = Errors;
+			sourceTree = "<group>";
+		};
+		67ABF6C42CCD17C3008DD703 /* CustomViews */ = {
+			isa = PBXGroup;
+			children = (
+				67426BAA2CCA59E10086B22A /* PaddedTextField.swift */,
+			);
+			path = CustomViews;
+			sourceTree = "<group>";
+		};
+		67ABF6C52CCD17E2008DD703 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				67C3A8E32CC3F839007E83D2 /* Order.swift */,
+			);
+			path = Data;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -185,10 +242,13 @@
 				67D374082CC21BE900775671 /* TitleCell.swift in Sources */,
 				671291442CC0EFAC00A85863 /* ViewController.swift in Sources */,
 				67D374122CC2367C00775671 /* OrderPlacingCell.swift in Sources */,
+				677DA8882CC8F7AE007379EA /* ApplyPromocodeViewModel.swift in Sources */,
 				67D3740C2CC21C7700775671 /* PromocodeCell.swift in Sources */,
+				677DA8862CC8F758007379EA /* ApplyPromocodeViewController.swift in Sources */,
 				671291402CC0EFAC00A85863 /* AppDelegate.swift in Sources */,
 				67C3A8E22CC3F814007E83D2 /* TableCellViewModel.swift in Sources */,
 				67C3A8E02CC3F7EC007E83D2 /* OrderError.swift in Sources */,
+				67426BAB2CCA59E10086B22A /* PaddedTextField.swift in Sources */,
 				67D3740A2CC21C3200775671 /* ApplyButtonCell.swift in Sources */,
 				67C3A8E42CC3F839007E83D2 /* Order.swift in Sources */,
 				67D374102CC21CCF00775671 /* TotalPriceCell.swift in Sources */,

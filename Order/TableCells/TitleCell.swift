@@ -40,6 +40,11 @@ class TitleCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupUI()
     }
+    
+    override func prepareForReuse() {
+        titleLabel.text = nil
+        subTitleLabel.text = nil
+    }
 }
 
 private extension TitleCell {
@@ -53,13 +58,13 @@ private extension TitleCell {
     }
 
     func setupUI() {
+        contentView.backgroundColor = .white
         contentView.addSubview(titleLabel)
         contentView.addSubview(subTitleLabel)
         
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            titleLabel.heightAnchor.constraint(equalToConstant: 32),
             titleLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 24),
             titleLabel.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 16),
             titleLabel.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -16)
