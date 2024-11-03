@@ -17,6 +17,9 @@ enum Colors {
     static let backgroundGray = UIColor(red: 246/255, green: 246/255, blue: 246/255, alpha: 1)
     static let separatorGray = UIColor(red: 234/255, green: 234/255, blue: 234/255, alpha: 1)
     static let red = UIColor(red: 244/255, green: 45/255, blue: 45/255, alpha: 1)
+    static let lightRed = UIColor(red: 255/255, green: 236/255, blue: 236/255, alpha: 1)
+    static let starGray = UIColor(red: 217/255, green: 217/255, blue: 217/255, alpha: 1)
+    static let starYellow = UIColor(red: 248/255, green: 198/255, blue: 35/255, alpha: 1)
 }
 
 protocol TableViewUpdateDelegate: AnyObject {
@@ -91,7 +94,7 @@ class ViewController: UIViewController {
         
         setupUI()
         
-        tableView.reloadData()
+        reloadTable()
         viewModel.madeData()
     }
     
@@ -100,7 +103,7 @@ class ViewController: UIViewController {
         
         do {
             try viewModel.checkData()
-            tableView.reloadData()
+            reloadTable()
         } catch OrderError.zeroProducts {
             showAlert("Нет продуктов в заказе")
         } catch OrderError.zeroProductPrice {
@@ -202,6 +205,8 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
             cell.viewModel = orderButtonInfo
             cell.selectionStyle = .none
             return cell
+        default:
+            return UITableViewCell()
         }
     }
 }

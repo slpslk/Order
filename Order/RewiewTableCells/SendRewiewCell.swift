@@ -1,15 +1,15 @@
 //
-//  orderPlacingCell.swift
+//  SendRewiewCell.swift
 //  Order
 //
-//  Created by Sofya Avtsinova on 18.10.2024.
+//  Created by Sofya Avtsinova on 30.10.2024.
 //
 
 import Foundation
 import UIKit
 
-class OrderPlacingCell: UITableViewCell {
-    var viewModel: TableCellViewModel.CellViewModelType.SubmitButtonInfo? {
+class SendRewiewCell: UITableViewCell {
+    var viewModel: RewiewTableCellViewModel.CellViewModelType.SubmitButtonInfo? {
         didSet {
             updateUI()
         }
@@ -26,13 +26,14 @@ class OrderPlacingCell: UITableViewCell {
     
     private var highlightedAttributes = [
         NSAttributedString.Key.font: UIFont(name: "Roboto-Regular", size: 12),
-        NSAttributedString.Key.foregroundColor: Colors.darkGray
+        NSAttributedString.Key.foregroundColor: Colors.orange
     ]
     
-    private lazy var placeOrderButton: UIButton = {
+    private lazy var sendRewiewButton: UIButton = {
         let button = UIButton()
         button.backgroundColor = Colors.orange
         button.layer.cornerRadius = 12
+        button.addTarget(self, action: #selector(tapButton), for: .touchUpInside)
         return button
     }()
     
@@ -53,12 +54,20 @@ class OrderPlacingCell: UITableViewCell {
     }
     
     override func prepareForReuse() {
-        placeOrderButton.configuration = nil
+        sendRewiewButton.configuration = nil
         warningText.attributedText = nil
     }
 }
 
-private extension OrderPlacingCell {
+private extension SendRewiewCell {
+    @objc func tapButton() {
+        guard let viewModel else {
+            return
+        }
+        
+        viewModel.click?()
+    }
+    
     func updateUI() {
         guard let viewModel else {
             return
@@ -72,7 +81,7 @@ private extension OrderPlacingCell {
         config.attributedTitle = titleAttributedString
         config.baseForegroundColor = .white
         config.titleAlignment = .center
-        placeOrderButton.configuration = config
+        sendRewiewButton.configuration = config
         
         
         let attributedText = NSMutableAttributedString(string: viewModel.warningText,
@@ -84,25 +93,24 @@ private extension OrderPlacingCell {
     }
 
     func setupUI() {
-        contentView.backgroundColor = Colors.backgroundGray
-        contentView.addSubview(placeOrderButton)
+        contentView.addSubview(sendRewiewButton)
         contentView.addSubview(warningText)
         
-        placeOrderButton.translatesAutoresizingMaskIntoConstraints = false
+        sendRewiewButton.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            placeOrderButton.heightAnchor.constraint(equalToConstant: 54),
-            placeOrderButton.topAnchor.constraint(equalTo: contentView.topAnchor),
-            placeOrderButton.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 32),
-            placeOrderButton.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -32)
+            sendRewiewButton.heightAnchor.constraint(equalToConstant: 54),
+            sendRewiewButton.topAnchor.constraint(equalTo: contentView.topAnchor),
+            sendRewiewButton.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            sendRewiewButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor)
         ])
         
         warningText.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            warningText.topAnchor.constraint(equalTo: placeOrderButton.bottomAnchor, constant: 16),
-            warningText.widthAnchor.constraint(equalToConstant: 220),
-            warningText.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
+            warningText.topAnchor.constraint(equalTo: sendRewiewButton.bottomAnchor, constant: 16),
+            warningText.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 32),
+            warningText.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -32),
             warningText.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -16)
         ])
     }

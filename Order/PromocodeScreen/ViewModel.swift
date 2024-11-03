@@ -288,7 +288,9 @@ private extension ViewModel {
                                                             paymentAmount: orderInfo.paymentDiscount,
                                                             totalPrice: totalPrice))))
         
-        footerCells.append(.init(type: .orderButton(.init())))
+        footerCells.append(.init(type: .orderButton(.init(title: "Оформить заказ",
+                                                          warningText: "Нажимая кнопку «Оформить заказ», Вы соглашаетесь с ",
+                                                          highlightedText: "Условиями оферты"))))
     }
     
     func addNewPromocode(at newPromocodeIndex: Int) {

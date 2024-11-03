@@ -15,6 +15,7 @@ class PaddedTextField: UITextField, UITextFieldDelegate {
             layoutSubviews()
         }
     }
+    var setCustomPlaceholder: Bool = false
     let placeholderHeight: CGFloat = 16
     
     private lazy var placeholderLabel: UILabel = {
@@ -32,20 +33,31 @@ class PaddedTextField: UITextField, UITextFieldDelegate {
         button.addTarget(self, action: #selector(clearClicked), for: .touchUpInside)
         return button
     }()
-
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        setupPlaceholderLabel()
+    convenience init(setCustomPlaceholder: Bool) {
+        self.init(frame: .zero)
+        self.setCustomPlaceholder = setCustomPlaceholder
+        
+        if setCustomPlaceholder {
+            setupPlaceholderLabel()
+        } else {
+            self.delegate = self
+        }
         
         self.rightView = clearButton
         self.clearButtonMode = .never
         self.rightViewMode = .whileEditing
     }
     
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+    }
+    
     required init?(coder: NSCoder) {
         super.init(coder: coder)
-        setupPlaceholderLabel()
+        if setCustomPlaceholder {
+            setupPlaceholderLabel()
+        }
     }
     
     override func layoutSubviews() {
@@ -74,7 +86,7 @@ class PaddedTextField: UITextField, UITextFieldDelegate {
     
     override func textRect(forBounds bounds: CGRect) -> CGRect {
         if let padding {
-            return bounds.inset(by: UIEdgeInsets(top: padding.top + placeholderHeight,
+            return bounds.inset(by: UIEdgeInsets(top: padding.top + (setCustomPlaceholder ? placeholderHeight : 0),
                                                  left: padding.left,
                                                  bottom: padding.bottom,
                                                  right: padding.right))
@@ -97,7 +109,7 @@ class PaddedTextField: UITextField, UITextFieldDelegate {
     
     override func editingRect(forBounds bounds: CGRect) -> CGRect {
         if let padding {
-            return bounds.inset(by: UIEdgeInsets(top: padding.top + placeholderHeight,
+            return bounds.inset(by: UIEdgeInsets(top: padding.top + (setCustomPlaceholder ? placeholderHeight : 0),
                                                  left: padding.left,
                                                  bottom: padding.bottom,
                                                  right: padding.right))

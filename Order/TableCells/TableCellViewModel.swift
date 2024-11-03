@@ -52,10 +52,10 @@ struct TableCellViewModel {
             var totalPrice: Double
         }
         
-        struct OrderButtonInfo {
-            let title: String = "Оформить заказ"
-            let warningText: String = "Нажимая кнопку «Оформить заказ», Вы соглашаетесь с "
-            let highlightedText: String = "Условиями оферты"
+        struct SubmitButtonInfo {
+            let title: String
+            let warningText: String
+            let highlightedText: String
         }
 
         case title(TitleInfo)
@@ -63,7 +63,7 @@ struct TableCellViewModel {
         case applyButton(ApplyButtonInfo)
         case hideButton(HideButtonInfo)
         case totalPrice(TotalPriceInfo)
-        case orderButton(OrderButtonInfo)
+        case orderButton(SubmitButtonInfo)
     }
 
     var type: CellViewModelType
