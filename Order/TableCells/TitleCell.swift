@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 
 
-class TitleCell: UITableViewCell {
+final class TitleCell: UITableViewCell {
     var viewModel: TableCellViewModel.CellViewModelType.TitleInfo? {
         didSet {
             updateUI()
@@ -18,7 +18,7 @@ class TitleCell: UITableViewCell {
     
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont(name: "Roboto-Regular", size: 24)
+        label.font = UIFont.Roboto.regularWithSize(24)
         label.textColor = Colors.darkGray
         label.numberOfLines = 0
         return label
@@ -26,7 +26,7 @@ class TitleCell: UITableViewCell {
     
     private lazy var subTitleLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont(name: "Roboto-Regular", size: 14)
+        label.font = UIFont.Roboto.regularWithSize(14)
         label.textColor = Colors.lightGray
         label.numberOfLines = 0
         return label

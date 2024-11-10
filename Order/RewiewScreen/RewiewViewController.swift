@@ -8,10 +8,17 @@
 import Foundation
 import UIKit
 
-class RewiewViewController: UIViewController {
+final class RewiewViewController: UIViewController {
     
     private var viewModel: RewiewViewModel
     private var tableViewBottomConstraint: NSLayoutConstraint?
+    private let titleAttributes = [NSAttributedString.Key.foregroundColor: Colors.darkGray]
+    private lazy var backButton: UIButton = {
+        let button = UIButton(type: .custom)
+        button.setImage(UIImage(named: "backButton"), for: .normal)
+        button.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
+        return button
+    }()
     
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
@@ -37,34 +44,8 @@ class RewiewViewController: UIViewController {
     
     override func viewDidLoad() {
         view.backgroundColor = .white
-        
-        viewModel.reloadRow = { [weak self] indexPath in
-            self?.tableView.reloadRows(at: [indexPath], with: .none)
-        }
-        
-        viewModel.addRow = { [weak self] indexPath in
-            self?.tableView.insertRows(at: [indexPath], with: .automatic)
-        }
-        
-        viewModel.deleteRow = { [weak self] indexPath in
-            self?.tableView.deleteRows(at: [indexPath], with: .automatic)
-        }
-        
-        viewModel.reloadTable = { [weak self] in
-            self?.tableView.reloadData()
-        }
-    
-        view.addSubview(tableView)
-        tableView.translatesAutoresizingMaskIntoConstraints = false
-        tableViewBottomConstraint = tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
-        tableViewBottomConstraint?.isActive = true
-        
-        NSLayoutConstraint.activate([
-            tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 16),
-            tableView.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 16),
-            tableView.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: -16),
-        ])
-        tableView.reloadData()
+        setupNavigationBar()
+        setupUI()
     }
     
     init(product: RewiewTableCellViewModel) {
@@ -147,9 +128,67 @@ extension RewiewViewController: UITableViewDelegate, UITableViewDataSource {
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
         view.endEditing(true)
     }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        let viewModel = viewModel.rewiewCells[indexPath.row]
+        
+        switch viewModel.type {
+        case .addFiles(let addFilesInfo):
+            return AddFilesCell.getCellHeight(viewModel: addFilesInfo)
+        default:
+            return UITableView.automaticDimension
+        }
+    }
 }
 
 private extension RewiewViewController {
+    func setupNavigationBar() {
+        title = "Напишите отзыв"
+        navigationController?.navigationBar.titleTextAttributes = titleAttributes
+        let backButtonItem = UIBarButtonItem(customView: backButton)
+        navigationItem.leftBarButtonItem = backButtonItem
+    }
+    
+    func setupUI() {
+        viewModel.reloadRow = { [weak self] indexPath in
+            self?.tableView.reloadRows(at: [indexPath], with: .none)
+        }
+        
+        viewModel.addRow = { [weak self] indexPath in
+            self?.tableView.insertRows(at: [indexPath], with: .automatic)
+        }
+        
+        viewModel.deleteRow = { [weak self] indexPath in
+            self?.tableView.deleteRows(at: [indexPath], with: .automatic)
+        }
+        
+        viewModel.reloadTable = { [weak self] in
+            self?.tableView.reloadData()
+        }
+    
+        viewModel.reloadCellHeight = { [weak self] in
+            self?.tableView.beginUpdates()
+            self?.tableView.endUpdates()
+        }
+        
+        view.addSubview(tableView)
+        
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        tableViewBottomConstraint = tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
+        tableViewBottomConstraint?.isActive = true
+        
+        NSLayoutConstraint.activate([
+            tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 16),
+            tableView.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 16),
+            tableView.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: -16),
+        ])
+        tableView.reloadData()
+    }
+    
+    @objc func backButtonTapped() {
+        navigationController?.popViewController(animated: true)
+    }
+    
     @objc func keyboardWillShow(notification: NSNotification) {
         guard let userInfo = notification.userInfo,
               let keyboardFrame = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect else { return }

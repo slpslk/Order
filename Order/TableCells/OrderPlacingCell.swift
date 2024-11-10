@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-class OrderPlacingCell: UITableViewCell {
+final class OrderPlacingCell: UITableViewCell {
     var viewModel: TableCellViewModel.CellViewModelType.SubmitButtonInfo? {
         didSet {
             updateUI()
@@ -16,16 +16,16 @@ class OrderPlacingCell: UITableViewCell {
     }
     
     private lazy var buttonTextAttributes = AttributeContainer.init( [
-        NSAttributedString.Key.font: UIFont(name: "Roboto-Regular", size: 16) ?? .systemFont(ofSize: 16)
+        NSAttributedString.Key.font: UIFont.Roboto.regularWithSize(16) ?? .systemFont(ofSize: 16)
     ])
     
     private var textAttributes = [
-        NSAttributedString.Key.font: UIFont(name: "Roboto-Regular", size: 12),
+        NSAttributedString.Key.font: UIFont.Roboto.regularWithSize(12),
         NSAttributedString.Key.foregroundColor: Colors.lightGray
     ]
     
     private var highlightedAttributes = [
-        NSAttributedString.Key.font: UIFont(name: "Roboto-Regular", size: 12),
+        NSAttributedString.Key.font: UIFont.Roboto.regularWithSize(12),
         NSAttributedString.Key.foregroundColor: Colors.darkGray
     ]
     

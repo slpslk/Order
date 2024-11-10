@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-class AddFilesCell: UITableViewCell {
+final class AddFilesCell: UITableViewCell {
     enum Constants {
         static let padding: CGFloat = 8
         static let number: CGFloat = 4
@@ -20,8 +20,6 @@ class AddFilesCell: UITableViewCell {
             updateUI()
         }
     }
-
-    var heightConstraintion: NSLayoutConstraint!
     
     private var collectionViewModel = CollectionViewModel()
 
@@ -39,11 +37,6 @@ class AddFilesCell: UITableViewCell {
         return collectionView
     }()
     
-    private lazy var wrapper: UIView = {
-        let view = UIView()
-        view.addSubview(collectionView)
-        return view
-    }()
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -52,6 +45,23 @@ class AddFilesCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupUI()
+    }
+    
+    static func getCellHeight(viewModel: RewiewTableCellViewModel.CellViewModelType.AddFilesInfo) -> CGFloat {
+        let cellHeight: CGFloat = 80.25
+        let padding = Constants.padding
+        let bottomOffset: CGFloat = 17
+        
+        let numberOfCompleteRows = viewModel.visibleCellsCount / 4
+        let hasPartialRow = viewModel.visibleCellsCount % 4 > 0
+        
+        let paddingCount = max(0, numberOfCompleteRows - 1 + (hasPartialRow ? 1 : 0))
+        
+        let totalHeight = (CGFloat(numberOfCompleteRows + (hasPartialRow ? 1 : 0)) * cellHeight) +
+                          (CGFloat(paddingCount) * padding) +
+                          bottomOffset
+        
+        return totalHeight
     }
 }
 
@@ -116,36 +126,21 @@ private extension AddFilesCell {
     }
     
     func updateCollectionViewHeight() {
-        let totalHeight = (CGFloat(collectionView.numberOfItems(inSection: 0))/4) + 1 * 80
-        heightConstraintion.constant = totalHeight
-        contentView.layoutIfNeeded()
+        viewModel?.reload?(collectionView.numberOfItems(inSection: 0))
     }
 
     func setupUI() {
         contentView.backgroundColor = .white
-        contentView.addSubview(wrapper)
+        contentView.addSubview(collectionView)
         
         collectionView.translatesAutoresizingMaskIntoConstraints = false
-        wrapper.translatesAutoresizingMaskIntoConstraints = false
-        wrapper.setContentHuggingPriority(.defaultLow, for: .vertical)
-        wrapper.setContentHuggingPriority(.defaultLow, for: .horizontal)
-        NSLayoutConstraint.activate([
-            wrapper.heightAnchor.constraint(greaterThanOrEqualTo: collectionView.heightAnchor, multiplier: 1),
-            wrapper.topAnchor.constraint(equalTo: contentView.topAnchor),
-            wrapper.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-            wrapper.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            wrapper.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -16)
-        ])
         
         NSLayoutConstraint.activate([
-            collectionView.topAnchor.constraint(equalTo: wrapper.topAnchor),
-            collectionView.leadingAnchor.constraint(equalTo: wrapper.leadingAnchor),
-            collectionView.trailingAnchor.constraint(equalTo: wrapper.trailingAnchor),
-            collectionView.bottomAnchor.constraint(equalTo: wrapper.bottomAnchor)
+            collectionView.topAnchor.constraint(equalTo: contentView.topAnchor),
+            collectionView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            collectionView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            collectionView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -16)
         ])
-        
-        heightConstraintion = collectionView.heightAnchor.constraint(equalToConstant: 80)
-        heightConstraintion.isActive = true
         updateCollectionViewHeight()
     }
 }

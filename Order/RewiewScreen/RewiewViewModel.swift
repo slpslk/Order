@@ -7,11 +7,12 @@
 
 import Foundation
 
-class RewiewViewModel {
+final class RewiewViewModel {
     var reloadRow: ((IndexPath) -> Void)?
     var addRow: ((IndexPath) -> Void)?
     var deleteRow: ((IndexPath) -> Void)?
     var reloadTable: (() -> Void)?
+    var reloadCellHeight: (() -> Void)?
     
     let product: RewiewTableCellViewModel
     
@@ -41,9 +42,13 @@ class RewiewViewModel {
 
     lazy var rewiewCells: [RewiewTableCellViewModel] = [
         product,
-        .init(type: .addFiles(.init(mainInfo: mainCell, imagePaths: imagePathsCells))),
         .init(type: .stars(.init(filledStarsCount: 0, tapStar: { [weak self] starIndex in
                                                         self?.fillStars(starIndex: starIndex)}))),
+        .init(type: .addFiles(.init(mainInfo: mainCell,
+                                    imagePaths: imagePathsCells,
+                                    visibleCellsCount: 1,
+                                    reload: { count in
+                                        self.changeCount(count: count)}))),
         .init(type: .textField(.init(placeholder: "Достоинства",
                                          isLast: false,
                                          next: { id in
@@ -89,6 +94,18 @@ private extension RewiewViewModel {
                 rewiewCells.remove(at: starsIndex)
                 rewiewCells.insert(.init(type: .stars(newStarsInfo)), at: starsIndex)
                 reloadRow?(IndexPath(row: starsIndex, section: 0))
+            }
+        }
+    }
+    
+    func changeCount(count: Int) {
+        if let addFilesIndex = rewiewCells.firstIndex(where: { $0.isAddFiles }) {
+            if case var .addFiles(addFilesInfo) = rewiewCells[addFilesIndex].type {
+                addFilesInfo.visibleCellsCount = count
+                
+                rewiewCells.remove(at: addFilesIndex)
+                rewiewCells.insert(.init(type: .addFiles(addFilesInfo)), at: addFilesIndex)
+                reloadCellHeight?()
             }
         }
     }

@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-class StarsCell: UITableViewCell {
+final class StarsCell: UITableViewCell {
     var viewModel: RewiewTableCellViewModel.CellViewModelType.StarsInfo? {
         didSet {
             updateUI()
@@ -17,7 +17,7 @@ class StarsCell: UITableViewCell {
     
     private lazy var starsTitle: UILabel = {
         let label = UILabel()
-        label.font = UIFont(name: "Roboto-Regular", size: 16)
+        label.font = UIFont.Roboto.regularWithSize(16)
         label.textColor = Colors.lightGray
         return label
     }()

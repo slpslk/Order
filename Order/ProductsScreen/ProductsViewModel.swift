@@ -7,11 +7,11 @@
 
 import Foundation
 
-class ProductsViewModel {
+final class ProductsViewModel {
     lazy var products: [RewiewProduct] = [
         .init(imagePath: "ring_1",
               title: "Золотое плоское обручальное кольцо 4 мм",
-              size: 17),
+              size: 17.5),
         .init(imagePath: "ring_2",
               title: "Золотое плоское обручальное кольцо 4 мм",
               size: 17),

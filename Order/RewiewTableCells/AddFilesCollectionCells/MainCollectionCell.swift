@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-class MainCollectionCell: UICollectionViewCell {
+final class MainCollectionCell: UICollectionViewCell {
     var viewModel: CollectionCellViewModel.CellViewModelType.MainInfo? {
         didSet {
             updateUI()
@@ -22,14 +22,14 @@ class MainCollectionCell: UICollectionViewCell {
     
     private lazy var title: UILabel = {
         let label = UILabel()
-        label.font = UIFont(name: "Roboto-Regular", size: 14)
+        label.font = UIFont.Roboto.regularWithSize(14)
         label.textColor = Colors.darkGray
         return label
     }()
     
     private lazy var subTitle: UILabel = {
         let label = UILabel()
-        label.font = UIFont(name: "Roboto-Regular", size: 12)
+        label.font = UIFont.Roboto.regularWithSize(12)
         label.textColor = Colors.lightGray
         return label
     }()

@@ -7,7 +7,7 @@
 
 import Foundation
 
-class ViewModel {
+final class ViewModel {
     weak var delegate: TableViewUpdateDelegate?
     var applyButtonHandler: (() -> Void)?
     

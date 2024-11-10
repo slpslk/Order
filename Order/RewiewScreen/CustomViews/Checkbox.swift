@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-class Checkbox: UIButton {
+final class Checkbox: UIButton {
 
     private lazy var checkedImage: UIImageView = {
         return UIImageView(image: UIImage(named: "checked"))

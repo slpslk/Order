@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-class AddFileCollectionCell: UICollectionViewCell {
+final class AddFileCollectionCell: UICollectionViewCell {
     var viewModel: CollectionCellViewModel.CellViewModelType.AddFileInfo?
     
     private lazy var cloud: UIImageView = {

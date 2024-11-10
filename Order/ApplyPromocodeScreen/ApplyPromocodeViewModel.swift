@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-class ApplyPromocodeViewModel {
+final class ApplyPromocodeViewModel {
     var promocodeTitle: String = ""
     var applyPromocode: ((String) -> Void)?
     var findPromocode: ((String) -> String?)?

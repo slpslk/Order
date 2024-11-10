@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-class ErrorCell: UITableViewCell {
+final class ErrorCell: UITableViewCell {
     var viewModel: RewiewTableCellViewModel.CellViewModelType.ErrorInfo? {
         didSet {
             updateUI()
@@ -18,7 +18,7 @@ class ErrorCell: UITableViewCell {
     private lazy var errorLabel: UILabel = {
        let label = UILabel()
         label.textColor = Colors.red
-        label.font = UIFont(name: "Roboto-Regular", size: 14)
+        label.font = UIFont.Roboto.regularWithSize(14)
         label.numberOfLines = 0
         return label
     }()

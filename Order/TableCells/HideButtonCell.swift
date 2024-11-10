@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-class HideButtonCell: UITableViewCell {
+final class HideButtonCell: UITableViewCell {
     var viewModel: TableCellViewModel.CellViewModelType.HideButtonInfo? {
         didSet {
             updateUI()
@@ -16,7 +16,7 @@ class HideButtonCell: UITableViewCell {
     }
     
     private lazy var attributes = AttributeContainer.init([
-        NSAttributedString.Key.font: UIFont(name: "Roboto-Regular", size: 16) ?? UIFont.systemFont(ofSize: 16)
+        NSAttributedString.Key.font: UIFont.Roboto.regularWithSize(16) ?? UIFont.systemFont(ofSize: 16)
     ])
     
     private lazy var hideButton: UIButton = {

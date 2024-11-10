@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-class PromocodeCell: UITableViewCell {
+final class PromocodeCell: UITableViewCell {
     var viewModel: TableCellViewModel.CellViewModelType.PromocodeInfo? {
         didSet {
             updateUI()
@@ -18,7 +18,7 @@ class PromocodeCell: UITableViewCell {
     private lazy var promocodeTitle: UILabel = {
         let label = UILabel()
         label.textColor = Colors.darkGray
-        label.font = UIFont(name: "Roboto-Regular", size: 16)
+        label.font = UIFont.Roboto.regularWithSize(16)
         label.numberOfLines = 0
         return label
     }()
@@ -54,7 +54,7 @@ class PromocodeCell: UITableViewCell {
     private lazy var promocodeDate: UILabel = {
        let label = UILabel()
         label.textColor = Colors.lightGray
-        label.font = UIFont(name: "Roboto-Regular", size: 14)
+        label.font = UIFont.Roboto.regularWithSize(14)
         return label
     }()
     
@@ -89,7 +89,7 @@ class PromocodeCell: UITableViewCell {
     private lazy var promocodeDescription: UILabel = {
         let label = UILabel()
         label.textColor = Colors.lightGray
-        label.font = UIFont(name: "Roboto-Regular", size: 12)
+        label.font = UIFont.Roboto.regularWithSize(12)
         return label
     }()
     

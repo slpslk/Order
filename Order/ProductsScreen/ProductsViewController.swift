@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-class ProductsViewController: UIViewController {
+final class ProductsViewController: UIViewController {
     let viewModel = ProductsViewModel()
     
     private lazy var tableView: UITableView = {

@@ -7,7 +7,7 @@
 
 import Foundation
 
-class CollectionViewModel {
+final class CollectionViewModel {
     
     private var addItem: ((IndexPath) -> Void)?
     private var deleteItem: ((IndexPath) -> Void)?
@@ -20,9 +20,7 @@ class CollectionViewModel {
     
     lazy var visibleImagePaths: [CollectionCellViewModel] = []
     
-    init() {
-        
-    }
+    init() { }
     
     init(addItem: ( (IndexPath) -> Void)?, deleteItem: ( (IndexPath) -> Void)?, reload: ( () -> Void)?, main: CollectionCellViewModel, images: [CollectionCellViewModel]) {
         self.addItem = addItem
@@ -75,13 +73,10 @@ class CollectionViewModel {
     func nextImageIndex() -> Int? {
         for item in 0..<imagePaths.count {
                if case let .image(imageInfo) = imagePaths[item].type {
-                   // Считаем, что изображение отсутствует в visibleImagePaths
                    var isVisible = false
 
-                   // Проверяем все видимые изображения
                    for viewImage in 0..<visibleImagePaths.count - 1 {
                        if case let .image(viewImageInfo) = visibleImagePaths[viewImage].type {
-                           // Если нашли совпадение, то изображение найдено
                            if imageInfo.id == viewImageInfo.id {
                                isVisible = true
                                break

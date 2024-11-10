@@ -36,6 +36,7 @@
 		6722ECBB2CD766C000C12387 /* CollectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6722ECBA2CD766C000C12387 /* CollectionViewModel.swift */; };
 		6722ECBF2CD7A96200C12387 /* ExtensionUIResponder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6722ECBE2CD7A96200C12387 /* ExtensionUIResponder.swift */; };
 		6722ECC12CD7A99C00C12387 /* ForNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6722ECC02CD7A99C00C12387 /* ForNotification.swift */; };
+		67337F192CE0A90F003520ED /* UIFontExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67337F182CE0A90F003520ED /* UIFontExtension.swift */; };
 		67426BAB2CCA59E10086B22A /* PaddedTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67426BAA2CCA59E10086B22A /* PaddedTextField.swift */; };
 		677DA8862CC8F758007379EA /* ApplyPromocodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 677DA8852CC8F758007379EA /* ApplyPromocodeViewController.swift */; };
 		677DA8882CC8F7AE007379EA /* ApplyPromocodeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 677DA8872CC8F7AE007379EA /* ApplyPromocodeViewModel.swift */; };
@@ -83,6 +84,7 @@
 		6722ECBA2CD766C000C12387 /* CollectionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewModel.swift; sourceTree = "<group>"; };
 		6722ECBE2CD7A96200C12387 /* ExtensionUIResponder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionUIResponder.swift; sourceTree = "<group>"; };
 		6722ECC02CD7A99C00C12387 /* ForNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForNotification.swift; sourceTree = "<group>"; };
+		67337F182CE0A90F003520ED /* UIFontExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIFontExtension.swift; sourceTree = "<group>"; };
 		67426BAA2CCA59E10086B22A /* PaddedTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaddedTextField.swift; sourceTree = "<group>"; };
 		677DA8852CC8F758007379EA /* ApplyPromocodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplyPromocodeViewController.swift; sourceTree = "<group>"; };
 		677DA8872CC8F7AE007379EA /* ApplyPromocodeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplyPromocodeViewModel.swift; sourceTree = "<group>"; };
@@ -128,6 +130,7 @@
 		6712913E2CC0EFAC00A85863 /* Order */ = {
 			isa = PBXGroup;
 			children = (
+				67337F172CE0A8F3003520ED /* UIFontExtension */,
 				6722ECBD2CD7A94C00C12387 /* ExtensionForUIResponder */,
 				6722ECBC2CD7A8E200C12387 /* CollectionViewCell */,
 				6722ECAA2CD4D69300C12387 /* RewiewTableCells */,
@@ -227,6 +230,14 @@
 				6722ECC02CD7A99C00C12387 /* ForNotification.swift */,
 			);
 			path = ExtensionForUIResponder;
+			sourceTree = "<group>";
+		};
+		67337F172CE0A8F3003520ED /* UIFontExtension */ = {
+			isa = PBXGroup;
+			children = (
+				67337F182CE0A90F003520ED /* UIFontExtension.swift */,
+			);
+			path = UIFontExtension;
 			sourceTree = "<group>";
 		};
 		67ABF6C02CCD174A008DD703 /* PromocodeScreen */ = {
@@ -384,6 +395,7 @@
 				67C3A8E22CC3F814007E83D2 /* TableCellViewModel.swift in Sources */,
 				67C3A8E02CC3F7EC007E83D2 /* OrderError.swift in Sources */,
 				67426BAB2CCA59E10086B22A /* PaddedTextField.swift in Sources */,
+				67337F192CE0A90F003520ED /* UIFontExtension.swift in Sources */,
 				67D3740A2CC21C3200775671 /* ApplyButtonCell.swift in Sources */,
 				67C3A8E42CC3F839007E83D2 /* Order.swift in Sources */,
 				6722ECA12CD244CC00C12387 /* SendRewiewCell.swift in Sources */,

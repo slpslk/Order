@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-class PaddedTextField: UITextField, UITextFieldDelegate {
+final class PaddedTextField: UITextField, UITextFieldDelegate {
     
     var padding: UIEdgeInsets? {
         didSet {
@@ -20,7 +20,7 @@ class PaddedTextField: UITextField, UITextFieldDelegate {
     
     private lazy var placeholderLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont(name: "Roboto-Regular", size: 12)
+        label.font = UIFont.Roboto.regularWithSize(12)
         label.textColor = Colors.lightGray
         label.text = "Введите код"
         return label

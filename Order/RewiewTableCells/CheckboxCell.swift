@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 
 
-class CheckboxCell: UITableViewCell {
+final class CheckboxCell: UITableViewCell {
     var viewModel: RewiewTableCellViewModel.CellViewModelType.CheckboxInfo? {
         didSet {
             updateUI()
@@ -25,7 +25,7 @@ class CheckboxCell: UITableViewCell {
     
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont(name: "Roboto-Regular", size: 16)
+        label.font = UIFont.Roboto.regularWithSize(16)
         label.textColor = Colors.darkGray
         label.numberOfLines = 0
         return label

@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 
 
-class TotalPriceCell: UITableViewCell {
+final class TotalPriceCell: UITableViewCell {
     var viewModel: TableCellViewModel.CellViewModelType.TotalPriceInfo? {
         didSet {
             updateUI()
@@ -18,14 +18,14 @@ class TotalPriceCell: UITableViewCell {
     
     private lazy var allPriceTitle: UILabel = {
         let label = UILabel()
-        label.font = UIFont(name: "Roboto-Regular", size: 14)
+        label.font = UIFont.Roboto.regularWithSize(14)
         label.textColor = Colors.darkGray
         return label
     }()
     
     private lazy var allPrice: UILabel = {
         let label = UILabel()
-        label.font = UIFont(name: "Roboto-Regular", size: 14)
+        label.font = UIFont.Roboto.regularWithSize(14)
         label.textColor = Colors.darkGray
         label.textAlignment = .right
         return label
@@ -40,14 +40,14 @@ class TotalPriceCell: UITableViewCell {
     
     private lazy var discountAmountTitle: UILabel = {
         let label = UILabel()
-        label.font = UIFont(name: "Roboto-Regular", size: 14)
+        label.font = UIFont.Roboto.regularWithSize(14)
         label.textColor = Colors.darkGray
         return label
     }()
     
     private lazy var discountAmount: UILabel = {
         let label = UILabel()
-        label.font = UIFont(name: "Roboto-Regular", size: 14)
+        label.font = UIFont.Roboto.regularWithSize(14)
         label.textColor = Colors.orange
         label.textAlignment = .right
         return label
@@ -62,7 +62,7 @@ class TotalPriceCell: UITableViewCell {
     
     private lazy var promocodeAmountTitle: UILabel = {
         let label = UILabel()
-        label.font = UIFont(name: "Roboto-Regular", size: 14)
+        label.font = UIFont.Roboto.regularWithSize(14)
         label.textColor = Colors.darkGray
         return label
     }()
@@ -74,7 +74,7 @@ class TotalPriceCell: UITableViewCell {
     
     private lazy var promocodeAmount: UILabel = {
         let label = UILabel()
-        label.font = UIFont(name: "Roboto-Regular", size: 14)
+        label.font = UIFont.Roboto.regularWithSize(14)
         label.textColor = Colors.green
         label.textAlignment = .right
         return label
@@ -90,14 +90,14 @@ class TotalPriceCell: UITableViewCell {
     
     private lazy var paymentAmountTitle: UILabel = {
         let label = UILabel()
-        label.font = UIFont(name: "Roboto-Regular", size: 14)
+        label.font = UIFont.Roboto.regularWithSize(14)
         label.textColor = Colors.darkGray
         return label
     }()
     
     private lazy var paymentAmount: UILabel = {
         let label = UILabel()
-        label.font = UIFont(name: "Roboto-Regular", size: 14)
+        label.font = UIFont.Roboto.regularWithSize(14)
         label.textColor = Colors.darkGray
         label.textAlignment = .right
         return label
@@ -131,14 +131,14 @@ class TotalPriceCell: UITableViewCell {
     
     private lazy var totalPriceTitle: UILabel = {
         let label = UILabel()
-        label.font = UIFont(name: "Roboto-Regular", size: 18)
+        label.font = UIFont.Roboto.regularWithSize(18)
         label.textColor = Colors.darkGray
         return label
     }()
     
     private lazy var totalPrice: UILabel = {
         let label = UILabel()
-        label.font = UIFont(name: "Roboto-Regular", size: 18)
+        label.font = UIFont.Roboto.regularWithSize(18)
         label.textColor = Colors.darkGray
         label.textAlignment = .right
         return label

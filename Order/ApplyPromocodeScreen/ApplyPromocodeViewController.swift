@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-class ApplyPromocodeViewController: UIViewController {
+final class ApplyPromocodeViewController: UIViewController {
     
     let viewModel = ApplyPromocodeViewModel()
     
@@ -39,7 +39,7 @@ class ApplyPromocodeViewController: UIViewController {
     
     private lazy var errorLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont(name: "Roboto-Regular", size: 12)
+        label.font = UIFont.Roboto.regularWithSize(12)
         label.textColor = Colors.red
         label.text = "К сожалению, данного промокода не существует"
         return label
@@ -78,7 +78,7 @@ class ApplyPromocodeViewController: UIViewController {
     }()
     
     private lazy var attributes = AttributeContainer.init([
-        NSAttributedString.Key.font: UIFont(name: "Roboto-Regular", size: 16) ?? UIFont.systemFont(ofSize: 16)
+        NSAttributedString.Key.font: UIFont.Roboto.regularWithSize(16) ?? UIFont.systemFont(ofSize: 16)
     ])
     
     override func viewDidLoad() {

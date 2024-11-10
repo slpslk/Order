@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-class ImageCollectionCell: UICollectionViewCell {
+final class ImageCollectionCell: UICollectionViewCell {
     
     var viewModel: CollectionCellViewModel.CellViewModelType.ImageInfo? {
         didSet {
@@ -53,7 +53,6 @@ private extension ImageCollectionCell {
         guard let viewModel else {
             return
         }
-        print("image func")
         viewModel.delete?(viewModel.id)
     }
     

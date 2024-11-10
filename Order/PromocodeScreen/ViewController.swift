@@ -31,7 +31,7 @@ protocol TableViewUpdateDelegate: AnyObject {
     func changeShowingCells()
 }
 
-class ViewController: UIViewController {
+final class ViewController: UIViewController {
     
     let viewModel = ViewModel()
     var cellsIsHidden = false
@@ -57,7 +57,7 @@ class ViewController: UIViewController {
         let label = UILabel()
         label.text = "Промокод применен"
         label.textColor = .white
-        label.font =  UIFont(name: "Roboto-Regular", size: 14)
+        label.font =  UIFont.Roboto.regularWithSize(14)
         return label
     }()
     
@@ -205,8 +205,6 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
             cell.viewModel = orderButtonInfo
             cell.selectionStyle = .none
             return cell
-        default:
-            return UITableViewCell()
         }
     }
 }

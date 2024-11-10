@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-class ProductCell: UITableViewCell {
+final class ProductCell: UITableViewCell {
     var viewModel: RewiewTableCellViewModel.CellViewModelType.ProductInfo? {
         didSet {
             updateUI()
@@ -24,7 +24,7 @@ class ProductCell: UITableViewCell {
     
     private lazy var productTitle: UILabel = {
         let label = UILabel()
-        label.font = UIFont(name: "Roboto-Regular", size: 14)
+        label.font = UIFont.Roboto.regularWithSize(14)
         label.textColor = Colors.darkGray
         label.numberOfLines = 0
         return label

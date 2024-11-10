@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-class RewiewProductCell: UITableViewCell {
+final class RewiewProductCell: UITableViewCell {
     var viewModel: RewiewTableCellViewModel.CellViewModelType.ProductInfo? {
         didSet {
             updateUI()
@@ -24,7 +24,7 @@ class RewiewProductCell: UITableViewCell {
     
     private lazy var productTitle: UILabel = {
         let label = UILabel()
-        label.font = UIFont(name: "Roboto-Regular", size: 14)
+        label.font = UIFont.Roboto.regularWithSize(14)
         label.textColor = Colors.darkGray
         label.numberOfLines = 0
         return label
@@ -32,7 +32,7 @@ class RewiewProductCell: UITableViewCell {
     
     private lazy var productSize: UILabel = {
         let label = UILabel()
-        label.font = UIFont(name: "Roboto-Regular", size: 14)
+        label.font = UIFont.Roboto.regularWithSize(14)
         label.textColor = Colors.lightGray
         return label
     }()
@@ -75,7 +75,13 @@ private extension RewiewProductCell {
         
         productImage.image = UIImage(named: viewModel.imagePath)
         productTitle.text = viewModel.title
-        productSize.text = "Размер: \(viewModel.size)"
+        
+        if viewModel.size.truncatingRemainder(dividingBy: 1) == 0 {
+            productSize.text = "Размер: \(Int(viewModel.size))"
+        } else {
+            productSize.text = "Размер: \(viewModel.size)"
+        }
+        
     }
 
     func setupUI() {

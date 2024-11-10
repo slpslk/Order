@@ -82,6 +82,8 @@ struct RewiewTableCellViewModel {
         struct AddFilesInfo {
             let mainInfo: CollectionCellViewModel
             let imagePaths: [CollectionCellViewModel]
+            var visibleCellsCount: Int
+            let reload: ((Int) -> Void)?
         }
 
         case product(ProductInfo)

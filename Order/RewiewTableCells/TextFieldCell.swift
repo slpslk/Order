@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-class TextFieldCell: UITableViewCell {
+final class TextFieldCell: UITableViewCell {
     var viewModel: RewiewTableCellViewModel.CellViewModelType.TextFieldInfo? {
         didSet {
             updateUI()
@@ -33,7 +33,7 @@ class TextFieldCell: UITableViewCell {
     }()
     
     private lazy var attributes = [
-        NSAttributedString.Key.font: UIFont(name: "Roboto-Regular", size: 16) ?? UIFont.systemFont(ofSize: 16),
+        NSAttributedString.Key.font: UIFont.Roboto.regularWithSize(16) ?? UIFont.systemFont(ofSize: 16),
         NSAttributedString.Key.foregroundColor: Colors.lightGray
     ]
     
