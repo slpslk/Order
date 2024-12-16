@@ -36,9 +36,8 @@ struct PurchaseView: View {
             .listRowSeparator(.hidden)
             
             Section {
-                SummaryView(viewModel: SummaryViewModel(summaryModel: viewModel.orderState.summary))
-            }
-            .background(RejectScreenColors.lightGray)
+                SummaryView(viewModel: SummaryViewModel(summaryModel: viewModel.orderState.summary, buttonHandler: { viewModel.paymentButtonTap() }))
+            }.listRowBackground(RejectScreenColors.lightGray)
             .listRowSeparator(.hidden)
         }
         .listStyle(.plain)
@@ -57,6 +56,11 @@ struct PurchaseView: View {
             if case let .error(message) = error {
                 isAlertPresented = true
                 errorMessage = message
+            }
+        }
+        .sheet(isPresented: $viewModel.finishScreenIsPresented) {
+            if let type = viewModel.finishScreenType {
+                FinishedScreenView(viewModel: FinishedScreenViewModel(screenType: type))
             }
         }
     }

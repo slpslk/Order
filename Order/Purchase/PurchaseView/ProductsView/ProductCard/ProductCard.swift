@@ -13,7 +13,14 @@ struct ProductCard: View {
     
     var body: some View {
         HStack(alignment: .top, spacing: 12) {
-            Image("ring_1")
+            AsyncImage(url: URL(string: viewModel.productModel.imagePath)){ image in
+                image
+                    .resizable()
+                    .scaledToFill()
+            } placeholder: {
+                ProgressView()
+            }
+            .frame(width: 80, height: 80)
             VStack(alignment: .leading, spacing: 8) {
                 LazyVStack(alignment: .leading) {
                     Text(viewModel.productModel.title)

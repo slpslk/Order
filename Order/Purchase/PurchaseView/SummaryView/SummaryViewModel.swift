@@ -10,6 +10,7 @@ import Foundation
 class SummaryViewModel: ObservableObject {
     private var summaryModel: Summary
     private let formatter = NumberFormatter()
+    private var buttonHandler: () -> Void
     
     @Published var productCount: String = ""
     @Published var startPrice: String = ""
@@ -18,9 +19,14 @@ class SummaryViewModel: ObservableObject {
     @Published var paymentDiscount: String = ""
     @Published var totalPrice: String = ""
     
-    init(summaryModel: Summary) {
+    init(summaryModel: Summary, buttonHandler: @escaping () -> Void) {
         self.summaryModel = summaryModel
+        self.buttonHandler = buttonHandler
         prepareData()
+    }
+    
+    func buttonTapped() {
+        buttonHandler()
     }
 }
 

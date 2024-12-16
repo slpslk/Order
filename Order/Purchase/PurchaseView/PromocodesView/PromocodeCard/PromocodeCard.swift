@@ -30,9 +30,10 @@ struct PromocodeCard: View {
                             .foregroundStyle(RejectScreenColors.darkGray)
                             .font(.title2)
                     }
-                    // поверять и преобразовывать дату
-                    Text("По \(viewModel.promocodeModel.endDate)")
-                        .foregroundStyle(RejectScreenColors.darkGray)
+                    if !viewModel.endDateText.isEmpty {
+                        Text(viewModel.endDateText)
+                            .foregroundStyle(RejectScreenColors.darkGray)
+                    }
                 }
             }
             .tint(RejectScreenColors.orange)

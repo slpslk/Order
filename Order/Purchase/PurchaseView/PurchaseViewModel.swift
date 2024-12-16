@@ -19,9 +19,14 @@ enum PurchaseViewError {
 }
 
 class PurchaseViewModel: ObservableObject {
+    enum Constants {
+        static let finishScreenTypes: [FinishedScreenType] = [.successPayed, .successNotPayed, .errorNotPayed, .errorDefault]
+    }
     var orderService: OrderService
     @Published var orderState: OrderState
     @Published var error: PurchaseViewError = .none
+    @Published var finishScreenIsPresented: Bool = false
+    @Published var finishScreenType: FinishedScreenType?
     
     private var promocodeSubscription: AnyCancellable?
     private var paymentMethodSubscription: AnyCancellable?
@@ -45,6 +50,11 @@ class PurchaseViewModel: ObservableObject {
     
     func togglePromocode(id: String) {
         orderService.setPromocodeActivity(for: id)
+    }
+    
+    func paymentButtonTap() {
+        finishScreenType = Constants.finishScreenTypes.randomElement() ?? .successPayed
+        finishScreenIsPresented = true
     }
 }
 

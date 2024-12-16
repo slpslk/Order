@@ -59,7 +59,7 @@ struct SummaryView: View {
             .font(.title3.bold())
             
             Button {
-//                tapHandler()
+                viewModel.buttonTapped()
             } label: {
                 Text("Оплатить")
                     .font(.body.weight(.semibold))
@@ -70,13 +70,14 @@ struct SummaryView: View {
                     .clipShape(.rect(cornerRadius: 12))
             }
             
-            Text("Нажимая кнопку «Оформить заказ», Вы соглашаетесь с ")
-                .foregroundStyle(RejectScreenColors.darkGray)
-                .font(.caption)
-            +
-            Text("Условиями оферты")
-                .foregroundStyle(RejectScreenColors.textGray)
-                .font(.caption)
+
+                Text("Нажимая кнопку «Оформить заказ», Вы соглашаетесь с ")
+                    .foregroundStyle(RejectScreenColors.darkGray)
+                    .font(.caption)
+                +
+                Text("Условиями оферты")
+                    .foregroundStyle(RejectScreenColors.textGray)
+                    .font(.caption)
            
         }
         .padding(.horizontal, 16)

@@ -83,6 +83,8 @@
 		67E0E4D52D0E04F900D34D95 /* SummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67E0E4D42D0E04F900D34D95 /* SummaryView.swift */; };
 		67E0E4D72D0F3C6500D34D95 /* PromocodeCardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67E0E4D62D0F3C6500D34D95 /* PromocodeCardViewModel.swift */; };
 		67E0E4D92D105D0400D34D95 /* SummaryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67E0E4D82D105D0400D34D95 /* SummaryViewModel.swift */; };
+		67E0E4DC2D107A0B00D34D95 /* FinishedScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67E0E4DB2D107A0B00D34D95 /* FinishedScreenView.swift */; };
+		67E0E4DE2D107D6700D34D95 /* FinishedScreenViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67E0E4DD2D107D6700D34D95 /* FinishedScreenViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -164,6 +166,8 @@
 		67E0E4D42D0E04F900D34D95 /* SummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SummaryView.swift; sourceTree = "<group>"; };
 		67E0E4D62D0F3C6500D34D95 /* PromocodeCardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromocodeCardViewModel.swift; sourceTree = "<group>"; };
 		67E0E4D82D105D0400D34D95 /* SummaryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SummaryViewModel.swift; sourceTree = "<group>"; };
+		67E0E4DB2D107A0B00D34D95 /* FinishedScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FinishedScreenView.swift; sourceTree = "<group>"; };
+		67E0E4DD2D107D6700D34D95 /* FinishedScreenViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FinishedScreenViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -497,6 +501,7 @@
 		67E0E4AC2D0AC63D00D34D95 /* PurchaseView */ = {
 			isa = PBXGroup;
 			children = (
+				67E0E4DA2D1079DD00D34D95 /* FinishedScreen */,
 				67E0E4D32D0E04E800D34D95 /* SummaryView */,
 				67E0E4C82D0D4FE300D34D95 /* PromocodesView */,
 				67E0E4BE2D0B6B8200D34D95 /* PaymentMethodView */,
@@ -587,6 +592,15 @@
 				67E0E4D82D105D0400D34D95 /* SummaryViewModel.swift */,
 			);
 			path = SummaryView;
+			sourceTree = "<group>";
+		};
+		67E0E4DA2D1079DD00D34D95 /* FinishedScreen */ = {
+			isa = PBXGroup;
+			children = (
+				67E0E4DB2D107A0B00D34D95 /* FinishedScreenView.swift */,
+				67E0E4DD2D107D6700D34D95 /* FinishedScreenViewModel.swift */,
+			);
+			path = FinishedScreen;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -688,6 +702,7 @@
 				67E0E4842D09C1C500D34D95 /* RejectOrderViewModel.swift in Sources */,
 				67E0E4942D09C39500D34D95 /* InfoView.swift in Sources */,
 				671291442CC0EFAC00A85863 /* PromocodesScreenViewController.swift in Sources */,
+				67E0E4DC2D107A0B00D34D95 /* FinishedScreenView.swift in Sources */,
 				67E0E49B2D0AC26900D34D95 /* CustomTextField.swift in Sources */,
 				6722EC9B2CD211FE00C12387 /* RewiewProductCell.swift in Sources */,
 				67E0E4892D09C22700D34D95 /* CheckboxListItemViewModel.swift in Sources */,
@@ -700,6 +715,7 @@
 				677DA8862CC8F758007379EA /* ApplyPromocodeViewController.swift in Sources */,
 				671291402CC0EFAC00A85863 /* AppDelegate.swift in Sources */,
 				6722EC9D2CD2171C00C12387 /* StarsCell.swift in Sources */,
+				67E0E4DE2D107D6700D34D95 /* FinishedScreenViewModel.swift in Sources */,
 				67C3A8E22CC3F814007E83D2 /* TableCellViewModel.swift in Sources */,
 				67E0E4A02D0AC2B900D34D95 /* SubmitButton.swift in Sources */,
 				67C3A8E02CC3F7EC007E83D2 /* OrderError.swift in Sources */,

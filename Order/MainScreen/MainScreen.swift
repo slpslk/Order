@@ -11,12 +11,18 @@ import SwiftUI
 
 final class MainViewController: UIViewController {
     let products: [Order.Product] = [
-        .init(imagePath: "https://images.unsplash.com/photo-1731700327903-824b789564f1?q=80&w=2787&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-              title: "Товар 1",
+        .init(imagePath: "https://s3-alpha-sig.figma.com/img/0107/0af6/3297f40e81f4a6e2f72d2ce876867dac?Expires=1735516800&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=jlN3AOxUTMoxNUVWw2jRYqO54YeCDbGHBE9O-9SIkJ9xCQD-3sTL5Zj0lgffWQhE4zVhEcaVapmJS9qOHoSEYR6oWHsXqtD75f6Xq~7dma5mUMT48vm70l8jeXgKrCBj2qmzASxXROsJYDrAoEG8dWhug3TtJowrskcpQXQP-BWbfpBc4RSL9-j2BsRS9XaUtZ4J9gucWshA17BeH0dT5X0NX0BFnicD5ynrZKrIVrkUupXjZxKkBc96Zy2o6BNOg1hutrXGL6la747TbBHFYahcIZrAaUPdAtw1wZkReygCAIz1wyOc9Yt4-VbPQqNxKenFMSBTJ~J359QbNXcDEA__",
+              title: "Золотое плоское обручальное кольцо 4 мм",
+              count: 1,
+              size: 17,
+              price: 32000,
+              discount: 10),
+        .init(imagePath: "https://s3-alpha-sig.figma.com/img/0107/0af6/3297f40e81f4a6e2f72d2ce876867dac?Expires=1735516800&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=jlN3AOxUTMoxNUVWw2jRYqO54YeCDbGHBE9O-9SIkJ9xCQD-3sTL5Zj0lgffWQhE4zVhEcaVapmJS9qOHoSEYR6oWHsXqtD75f6Xq~7dma5mUMT48vm70l8jeXgKrCBj2qmzASxXROsJYDrAoEG8dWhug3TtJowrskcpQXQP-BWbfpBc4RSL9-j2BsRS9XaUtZ4J9gucWshA17BeH0dT5X0NX0BFnicD5ynrZKrIVrkUupXjZxKkBc96Zy2o6BNOg1hutrXGL6la747TbBHFYahcIZrAaUPdAtw1wZkReygCAIz1wyOc9Yt4-VbPQqNxKenFMSBTJ~J359QbNXcDEA__",
+              title: "Золотое плоское обручальное кольцо 4 мм",
               count: 1,
               size: nil,
               price: 32000,
-              discount: 10)
+              discount: 10),
     ]
 
     let promocodes: [Order.Promocode] = [
@@ -57,15 +63,35 @@ final class MainViewController: UIViewController {
     ]
     
     let paymentMethods: [Order.PaymentMethod] = [
-        .init(imagePath: "",
+        .init(imagePath: "sber",
               title: "SberPay",
               discount: 5,
               subtitle: "Через приложение СберБанк",
               isActive: false),
-        .init(imagePath: "",
-              title: "SberPay",
+        .init(imagePath: "card",
+              title: "Банковской картой",
               discount: 5,
-              subtitle: "Через приложение СберБанк",
+              subtitle: "Visa, Master Card, МИР",
+              isActive: false),
+        .init(imagePath: "yandex",
+              title: "Яндекс Пэй со Сплитом",
+              discount: 5,
+              subtitle: "Оплата частями",
+              isActive: false),
+        .init(imagePath: "tinkoff",
+              title: "Рассрочка Тинькофф",
+              discount: 5,
+              subtitle: "На 3 месяца без переплат",
+              isActive: false),
+        .init(imagePath: "tpay",
+              title: "Tinkoff Pay",
+              discount: 5,
+              subtitle: "Через приложение Тинькофф",
+              isActive: false),
+        .init(imagePath: "wallet",
+              title: "Оплатить при получении",
+              discount: nil,
+              subtitle: "Наличными или картой",
               isActive: false),
     ]
     
@@ -121,6 +147,13 @@ final class MainViewController: UIViewController {
         return stack
     }()
     
+    private lazy var backButton: UIButton = {
+        let button = UIButton(type: .custom)
+        button.setImage(UIImage(named: "backButton"), for: .normal)
+        button.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
+        return button
+    }()
+    
     private let titleAttributes = [NSAttributedString.Key.foregroundColor: Colors.darkGray]
     
     override func viewDidLoad() {
@@ -131,6 +164,7 @@ final class MainViewController: UIViewController {
         navigationController?.navigationBar.titleTextAttributes = titleAttributes
         
         setupUI()
+        setupNavigationBar()
     }
 }
 
@@ -143,6 +177,14 @@ private extension MainViewController {
             buttonStack.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16),
             buttonStack.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16),
         ])
+    }
+    func setupNavigationBar() {
+        let backButtonItem = UIBarButtonItem(customView: backButton)
+        navigationItem.leftBarButtonItem = backButtonItem
+    }
+    
+    @objc func backButtonTapped() {
+        navigationController?.popViewController(animated: true)
     }
     
     @objc func promocodesTapped() {
