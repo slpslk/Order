@@ -8,7 +8,6 @@
 import Foundation
 import UIKit
 
-
 final class ApplyButtonCell: UITableViewCell {
     var viewModel: TableCellViewModel.CellViewModelType.ApplyButtonInfo? {
         didSet {

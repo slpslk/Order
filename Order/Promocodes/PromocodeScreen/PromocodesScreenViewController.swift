@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  PromocodesScreenViewController.swift
 //  Order
 //
 //  Created by Sofya Avtsinova on 17.10.2024.
@@ -31,9 +31,9 @@ protocol TableViewUpdateDelegate: AnyObject {
     func changeShowingCells()
 }
 
-final class ViewController: UIViewController {
+final class PromocodesScreenViewController: UIViewController {
     
-    let viewModel = ViewModel()
+    let viewModel: PromocodesScreenViewModel
     var cellsIsHidden = false
 
     private lazy var tableView: UITableView = {
@@ -71,6 +71,15 @@ final class ViewController: UIViewController {
     
     private let titleAttributes = [NSAttributedString.Key.foregroundColor: Colors.darkGray]
     
+    init(viewModel: PromocodesScreenViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -93,32 +102,30 @@ final class ViewController: UIViewController {
         view.addSubview(tableView)
         
         setupUI()
-        
         reloadTable()
-        viewModel.madeData()
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        
-        do {
-            try viewModel.checkData()
-            reloadTable()
-        } catch OrderError.zeroProducts {
-            showAlert("Нет продуктов в заказе")
-        } catch OrderError.zeroProductPrice {
-            showAlert("Стоимость продукта должна быть больше 0")
-        } catch OrderError.tooBigDiscount {
-            showAlert("Сумма текущей скидки не может быть больше суммы заказа")
-        } catch OrderError.moreThanTwoPromocodes{
-            showAlert("Вы не можете использовать более двух промокодов за раз")
-        } catch {
-            showAlert("Ошибка данных промокода")
-        }
-    }
+//    override func viewDidAppear(_ animated: Bool) {
+//        super.viewDidAppear(animated)
+//        
+//        do {
+//            try viewModel.checkData()
+//            reloadTable()
+//        } catch OrderError.zeroProducts {
+//            showAlert("Нет продуктов в заказе")
+//        } catch OrderError.zeroProductPrice {
+//            showAlert("Стоимость продукта должна быть больше 0")
+//        } catch OrderError.tooBigDiscount {
+//            showAlert("Сумма текущей скидки не может быть больше суммы заказа")
+//        } catch OrderError.moreThanTwoPromocodes{
+//            showAlert("Вы не можете использовать более двух промокодов за раз")
+//        } catch {
+//            showAlert("Ошибка данных промокода")
+//        }
+//    }
 }
 
-private extension ViewController {
+private extension PromocodesScreenViewController {
     func setupUI() {
         tableView.translatesAutoresizingMaskIntoConstraints = false
         
@@ -148,7 +155,7 @@ private extension ViewController {
     }
 }
 
-extension ViewController: UITableViewDelegate, UITableViewDataSource {
+extension PromocodesScreenViewController: UITableViewDelegate, UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return viewModel.allCells.count
@@ -209,7 +216,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
     }
 }
 
-extension ViewController: TableViewUpdateDelegate {
+extension PromocodesScreenViewController: TableViewUpdateDelegate {
     func reloadTable(){
         tableView.reloadData()
     }
